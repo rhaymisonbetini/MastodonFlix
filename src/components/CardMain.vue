@@ -19,9 +19,6 @@
 export default {
   name: 'CardMain',
   inject: ['sharedState'],
-  mounted() {
-    console.log('this is', this.sharedState)
-  },
   methods: {
     getImageUrl(posterPath) {
       return `https://image.tmdb.org/t/p/w500${posterPath}`;
