@@ -14,8 +14,16 @@ class ApiService {
         });
     }
 
-    async getMostPopular(page=1) {
+    async getMostPopular(page = 1) {
         return this.client.get(`/popular?api_key=${this.apiKey}'&page=${page}`);
+    }
+
+    async getReviews(movieId) {
+        return this.client.get(`/${movieId}/reviews?api_key=${this.apiKey}`);
+    }
+
+    static getImageUrl(size = 500, posterPath) {
+        return `https://image.tmdb.org/t/p/w${size}${posterPath}`;
     }
 
 }

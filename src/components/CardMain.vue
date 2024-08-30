@@ -5,7 +5,7 @@
       <div v-else class="col-sm-12 col-md-3 mt-5" v-for="movie in sharedState.movies" :key="movie.id">
         <div class="card">
           <img :src="getImageUrl(movie.poster_path)" class="card-img-top" :alt="movie.title">
-          <div class="overlay">
+          <div class="overlay" @click="navigateToDetail(movie.id)">
             <div class="card-body">
               <div class="card-title">{{ movie.title }}</div>
               <RatingMicro :movie="movie"/>
@@ -21,6 +21,7 @@
 <script>
 import SkeletonCard from './skeletons/SkeletonCard.vue';
 import RatingMicro from './micro/RatingMicro.vue';
+import ApiService from "@/services/ApiService";
 
 export default {
   name: 'CardMain',
@@ -34,8 +35,11 @@ export default {
   },
   methods: {
     getImageUrl(posterPath) {
-      return `https://image.tmdb.org/t/p/w500${posterPath}`;
+      return ApiService.getImageUrl(500, posterPath)
     },
+    navigateToDetail(movieId) {
+      this.$router.push(`/movie/${movieId}`)
+    }
   },
   mounted() {
   }
