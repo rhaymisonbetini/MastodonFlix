@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TransitionGroup name="fade" tag="div" class="row" >
+    <TransitionGroup name="fade" tag="div" class="row">
       <SkeletonCard v-if="sharedState.loading"/>
       <div v-else class="col-sm-12 col-md-3 mt-5" v-for="movie in sharedState.movies" :key="movie.id">
         <div class="card">
@@ -8,9 +8,7 @@
           <div class="overlay">
             <div class="card-body">
               <div class="card-title">{{ movie.title }}</div>
-              <div class="rating">
-                <span v-html="getStars(movie.vote_average)"></span>
-              </div>
+              <RatingMicro :movie="movie"/>
               <p class="card-text">{{ movie.overview }}</p>
             </div>
           </div>
@@ -22,40 +20,22 @@
 
 <script>
 import SkeletonCard from './skeletons/SkeletonCard.vue';
+import RatingMicro from './micro/RatingMicro.vue';
 
 export default {
   name: 'CardMain',
   components: {
-    SkeletonCard
+    SkeletonCard,
+    RatingMicro
   },
   inject: ['sharedState'],
   data() {
-    return {
-    };
+    return {};
   },
   methods: {
     getImageUrl(posterPath) {
       return `https://image.tmdb.org/t/p/w500${posterPath}`;
     },
-    getStars(voteAverage) {
-      const fullStars = Math.floor(voteAverage / 2);
-      const hasHalfStar = voteAverage % 2 >= 1;
-      const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
-
-      const starsHtml = '★'.repeat(fullStars)
-          .split('')
-          .map(star => '<span class="star full-star">' + star + '</span>')
-          .join('');
-
-      const halfStarHtml = hasHalfStar ? '<span class="star half-star">★</span>' : '';
-
-      const emptyStarsHtml = '☆'.repeat(emptyStars)
-          .split('')
-          .map(star => '<span class="star empty-star">' + star + '</span>')
-          .join('');
-
-      return starsHtml + halfStarHtml + emptyStarsHtml;
-    }
   },
   mounted() {
   }
@@ -111,10 +91,6 @@ export default {
   margin-bottom: 10px;
 }
 
-.rating span {
-  font-size: 1.5rem;
-  color: #f39c12;
-}
 
 .card-text {
   font-size: 0.9rem;
@@ -123,25 +99,6 @@ export default {
   text-overflow: ellipsis;
 }
 
-.rating .star {
-  font-size: 1.5rem;
-  display: inline-block;
-  position: relative;
-  color: #f39c12;
-}
-
-.rating .star.half-star::before {
-  content: '★';
-  position: absolute;
-  left: 0;
-  width: 50%;
-  overflow: hidden;
-  color: #f39c12;
-}
-
-.rating .star.empty-star {
-  color: #ccc;
-}
 
 .fade-enter-active, .fade-leave-active {
   transition: opacity 1.5s;

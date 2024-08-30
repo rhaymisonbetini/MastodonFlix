@@ -14,8 +14,8 @@ class ApiService {
         });
     }
 
-    async getMostPopular() {
-        return this.client.get(`/popular?api_key=${this.apiKey}'&page=${1}`);
+    async getMostPopular(page=1) {
+        return this.client.get(`/popular?api_key=${this.apiKey}'&page=${page}`);
     }
 
 }

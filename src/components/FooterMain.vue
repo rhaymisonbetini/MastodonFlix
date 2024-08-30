@@ -33,7 +33,7 @@
         <!-- Copyright -->
         <div class="row mt-3">
           <div class="col text-center">
-            <p class="mb-0">&copy; 2024 MeuSite. Todos os direitos reservados.</p>
+            <p class="mb-0">&copy; 2024 <b class="text-danger fw-bold">MastodonFlix</b>. Todos os direitos reservados.</p>
           </div>
         </div>
       </div>

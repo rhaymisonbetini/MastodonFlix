@@ -54,14 +54,14 @@ export default {
 .skeleton-img {
   width: 100%;
   height: 400px;
-  background-color: #e0e0e0;
+  background-color: #292929;
   position: relative;
   overflow: hidden;
 }
 
 .skeleton-title,
 .skeleton-text {
-  background-color: #e0e0e0;
+  background-color: #292929;
   margin-bottom: 10px;
   position: relative;
   overflow: hidden;
