@@ -14,6 +14,10 @@ class ApiService {
         });
     }
 
+    async getMovieDetails(movieId) {
+        return this.client.get(`/${movieId}?api_key=${this.apiKey}`);
+    }
+
     async getMostPopular(page = 1) {
         return this.client.get(`/popular?api_key=${this.apiKey}'&page=${page}`);
     }
