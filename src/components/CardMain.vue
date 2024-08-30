@@ -1,24 +1,38 @@
 <template>
-  <div class="col-sm-12 col-md-3 mt-5" v-for="movie in sharedState.movies" :key="movie.id">
-    <div class="card">
-      <img :src="getImageUrl(movie.poster_path)" class="card-img-top" :alt="movie.title">
-      <div class="overlay">
-        <div class="card-body">
-          <div class="card-title">{{ movie.title }}</div>
-          <div class="rating">
-            <span v-html="getStars(movie.vote_average)"></span>
+  <div>
+    <TransitionGroup name="fade" tag="div" class="row" >
+      <SkeletonCard v-if="sharedState.loading"/>
+      <div v-else class="col-sm-12 col-md-3 mt-5" v-for="movie in sharedState.movies" :key="movie.id">
+        <div class="card">
+          <img :src="getImageUrl(movie.poster_path)" class="card-img-top" :alt="movie.title">
+          <div class="overlay">
+            <div class="card-body">
+              <div class="card-title">{{ movie.title }}</div>
+              <div class="rating">
+                <span v-html="getStars(movie.vote_average)"></span>
+              </div>
+              <p class="card-text">{{ movie.overview }}</p>
+            </div>
           </div>
-          <p class="card-text">{{ movie.overview }}</p>
         </div>
       </div>
-    </div>
+    </TransitionGroup>
   </div>
 </template>
 
 <script>
+import SkeletonCard from './skeletons/SkeletonCard.vue';
+
 export default {
   name: 'CardMain',
+  components: {
+    SkeletonCard
+  },
   inject: ['sharedState'],
+  data() {
+    return {
+    };
+  },
   methods: {
     getImageUrl(posterPath) {
       return `https://image.tmdb.org/t/p/w500${posterPath}`;
@@ -42,7 +56,8 @@ export default {
 
       return starsHtml + halfStarHtml + emptyStarsHtml;
     }
-
+  },
+  mounted() {
   }
 }
 </script>
@@ -98,7 +113,7 @@ export default {
 
 .rating span {
   font-size: 1.5rem;
-  color: #f39c12; /* Cor das estrelas */
+  color: #f39c12;
 }
 
 .card-text {
@@ -112,7 +127,7 @@ export default {
   font-size: 1.5rem;
   display: inline-block;
   position: relative;
-  color: #f39c12; /* Cor das estrelas cheias */
+  color: #f39c12;
 }
 
 .rating .star.half-star::before {
@@ -125,8 +140,15 @@ export default {
 }
 
 .rating .star.empty-star {
-  color: #ccc; /* Cor das estrelas vazias */
+  color: #ccc;
 }
 
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 1.5s;
+}
 
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */
+{
+  opacity: 0;
+}
 </style>

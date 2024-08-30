@@ -9,10 +9,10 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <RouterLink class="nav-link active" to="/">Home</RouterLink>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Top 10</a>
+            <RouterLink  class="nav-link active" to="/top-ten">Top 10</RouterLink>
           </li>
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">Fale conosco</a>
@@ -26,7 +26,7 @@
         </ul>
         <form class="d-flex" role="search">
           <input class="form-control me-2" type="search" placeholder="Busar pelo nome..." aria-label="Search">
-          <button  type="button" class="btn btn-light" >Buscar</button>
+          <button type="button" class="btn btn-light">Buscar</button>
         </form>
       </div>
     </div>
