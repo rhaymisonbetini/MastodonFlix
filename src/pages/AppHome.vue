@@ -1,8 +1,6 @@
 <template>
   <div class="row">
-    <CarouselMain
-        :banners="banners"
-    />
+    <CarouselMain/>
   </div>
   <div class="row">
     <CardMain/>
@@ -35,50 +33,15 @@ export default {
     return {
       apiService: null,
       banners: [],
-      sharedState: {
-        movies: [],
-        loading: true,
-      }
-    }
-  },
-
-  provide() {
-    return {
-      sharedState: this.sharedState
     }
   },
 
   mounted() {
     this.apiService = new ApiService();
-    this.getPopularMovies()
-    this.getCarousel()
+    this.$store.dispatch('fetchMovies');
+    this.$store.dispatch('fetchTopTenMovies')
   },
-
-  methods: {
-    getPopularMovies() {
-      let page = Math.random() * (10 - 1) + 1
-      this.apiService.getMostPopular(page)
-          .then(({data}) => {
-            this.sharedState.movies = data.results;
-            setTimeout(() => {
-              this.sharedState.loading = false;
-            }, 1000)
-          })
-          .catch(error => {
-            console.error(error);
-          });
-    },
-    getCarousel() {
-      this.apiService.getMostPopular(1)
-          .then(({data}) => {
-            this.banners = data.results
-          })
-          .catch(error => {
-            console.error(error);
-          });
-    }
-  }
-
+  methods: {}
 }
 </script>
 

@@ -13,11 +13,9 @@
 <script>
 export default {
   name: 'ReviewComponent',
-  props: {
-    reviews: {
-      type: Array,
-      required: true,
-      default: () => []
+  computed: {
+    reviews() {
+      return this.$store.getters['getSelectedReview']
     }
   }
 }

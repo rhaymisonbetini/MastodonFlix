@@ -60,19 +60,16 @@ import SkeletonCarousel from "@/components/skeletons/SkeletonCarousel.vue";
 
 export default {
   name: 'CarouselMain',
-  props: {
-    banners: {
-      type: Array,
-      required: true
-    }
-  },
   components: {
     SkeletonCarousel
   },
   data() {
     return {}
   },
-  mounted() {
+  computed: {
+    banners() {
+      return this.$store.getters['getTopTenMovies']
+    }
   },
   methods: {}
 }

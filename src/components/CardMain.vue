@@ -1,20 +1,16 @@
 <template>
-  <div>
-    <TransitionGroup name="fade" tag="div" class="row">
-      <SkeletonCard v-if="sharedState.loading"/>
-      <div v-else class="col-sm-12 col-md-3 mt-5" v-for="movie in sharedState.movies" :key="movie.id">
-        <div class="card">
-          <img :src="getImageUrl(movie.poster_path)" class="card-img-top" :alt="movie.title">
-          <div class="overlay" @click="navigateToDetail(movie.id)">
-            <div class="card-body">
-              <div class="card-title">{{ movie.title }}</div>
-              <RatingMicro :movie="movie"/>
-              <p class="card-text">{{ movie.overview }}</p>
-            </div>
-          </div>
+  <SkeletonCard v-if="!movies || movies.length <= 0"/>
+  <div v-else class="col-sm-12 col-md-3 mt-5" v-for="movie in movies" :key="movie.id">
+    <div class="card">
+      <img :src="getImageUrl(movie.poster_path)" class="card-img-top" :alt="movie.title">
+      <div class="overlay" @click="navigateToDetail(movie.id)">
+        <div class="card-body">
+          <div class="card-title">{{ movie.title }}</div>
+          <RatingMicro :movie="movie"/>
+          <p class="card-text">{{ movie.overview }}</p>
         </div>
       </div>
-    </TransitionGroup>
+    </div>
   </div>
 </template>
 
@@ -29,7 +25,6 @@ export default {
     SkeletonCard,
     RatingMicro
   },
-  inject: ['sharedState'],
   data() {
     return {};
   },
@@ -41,8 +36,11 @@ export default {
       this.$router.push(`/movie/${movieId}`)
     }
   },
-  mounted() {
-  }
+  computed: {
+    movies() {
+      return this.$store.getters['getMovie'];
+    }
+  },
 }
 </script>
 

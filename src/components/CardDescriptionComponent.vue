@@ -1,5 +1,5 @@
 <template>
-  <template v-for="(movie, index) in sharedTopTen.movies" :key="index">
+  <template v-for="(movie, index) in movies" :key="index">
     <div class="col-sm-12 col-md-4 mt-4">
       <img :src="getImageUrl(movie.poster_path)"
            class="image image-fluid w-100"
@@ -26,7 +26,6 @@ export default {
     RatingMicro,
     ReviewsMicro
   },
-  inject: ['sharedTopTen'],
   data() {
     return {}
   },
@@ -35,6 +34,11 @@ export default {
       return ApiService.getImageUrl(500, posterPath)
     },
   },
+  computed: {
+    movies() {
+      return this.$store.getters['getTopTenMovies'];
+    }
+  }
 }
 
 </script>
