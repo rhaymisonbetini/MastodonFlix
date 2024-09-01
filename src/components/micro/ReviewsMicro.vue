@@ -13,11 +13,12 @@
 <script>
 export default {
   name: 'ReviewComponent',
-  computed: {
-    reviews() {
-      return this.$store.getters['getSelectedReview']
+  props: {
+    reviews: {
+      type: Object,
+      required: true,
     }
-  }
+  },
 }
 </script>
 

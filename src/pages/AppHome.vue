@@ -19,7 +19,6 @@ import CarouselMain from "@/components/CarouselMain.vue"
 import CardMain from "@/components/CardMain.vue"
 import NotificationsMain from "@/components/NotificationsMain.vue"
 import FooterMain from "@/components/FooterMain.vue";
-import ApiService from "@/services/ApiService"
 
 export default {
   name: "AppHome",
@@ -29,19 +28,10 @@ export default {
     NotificationsMain,
     FooterMain
   },
-  data() {
-    return {
-      apiService: null,
-      banners: [],
-    }
-  },
-
-  mounted() {
-    this.apiService = new ApiService();
+  beforeMount() {
     this.$store.dispatch('fetchMovies');
     this.$store.dispatch('fetchTopTenMovies')
   },
-  methods: {}
 }
 </script>
 

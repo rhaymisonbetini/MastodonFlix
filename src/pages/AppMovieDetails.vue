@@ -15,7 +15,7 @@
                style="margin-right: 5px ">{{ gen.name }}</span></p>
       <span v-for="(cmp, index) in movie.production_companies" :key="index" class="badge text-bg-danger mb-2"
             style="margin-right: 5px ">{{ cmp.name }}</span>
-      <p>Country: {{ movie.origin_country[0] ?? '' }}</p>
+      <p>Country: {{ movie.origin_country ? movie.origin_country[0] : '' }}</p>
       <p>Certification: {{ movie.adult ? '+18' : 'Free' }}</p>
       <p>Release: {{ movie.release_date }}</p>
       <p>Budget: $ {{ new Intl.NumberFormat().format(movie.budget) }} </p>
@@ -23,7 +23,7 @@
       <p>Overview: {{ movie.overview }}</p>
     </div>
     <div class="col-12 text-white">
-      <ReviewsMicro class="mb-2 mt-2"/>
+      <ReviewsMicro :reviews="review" class="mb-2 mt-2"/>
     </div>
   </div>
 </template>
@@ -38,8 +38,6 @@ export default {
     ReviewsMicro,
     RatingMicro
   },
-  data() {
-  },
   beforeMount() {
     let movieId = this.$route.params.id
     this.$store.dispatch('fetchMovieDetails', movieId)
@@ -49,6 +47,9 @@ export default {
     movie() {
       return this.$store.getters['getSelectedMovie']
     },
+    review(){
+      return this.$store.getters['getSelectedReview']
+    }
   }
 }
 </script>

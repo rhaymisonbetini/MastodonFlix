@@ -12,16 +12,14 @@
             <RouterLink class="nav-link active" to="/">Home</RouterLink>
           </li>
           <li class="nav-item">
-            <RouterLink  class="nav-link active" to="/top-ten">Top 10</RouterLink>
+            <RouterLink class="nav-link active" to="/top-ten">Top 10</RouterLink>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Fale conosco</a>
+            <RouterLink v-if="!user && !user?.token" class="nav-link active" to="/register">Register</RouterLink>
+            <RouterLink v-else class="nav-link active" to="/auth">Profile</RouterLink>
           </li>
-          <li class="nav-item">
-            <a class="nav-link active">Políticas de uso</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active">Cadastrar-se</a>
+          <li class="nav-item" v-if="user && user?.token">
+            <RouterLink class="nav-link active" to="/" @click="doLogout()">Logout</RouterLink>
           </li>
         </ul>
         <form class="d-flex" role="search">
@@ -34,7 +32,21 @@
 </template>
 
 <script>
-export default {}
+export default {
+  beforeMount() {
+    this.$store.dispatch('fetchUser');
+  },
+  methods: {
+    doLogout() {
+      this.$store.dispatch('logout');
+    }
+  },
+  computed: {
+    user() {
+      return this.$store.getters['getUser']
+    }
+  }
+}
 
 </script>
 

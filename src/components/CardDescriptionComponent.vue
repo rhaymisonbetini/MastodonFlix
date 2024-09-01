@@ -1,6 +1,6 @@
 <template>
   <template v-for="(movie, index) in movies" :key="index">
-    <div class="col-sm-12 col-md-4 mt-4">
+    <div class="col-sm-12 col-md-4 mt-4" @click="goToDetails(movie.id)" style="cursor: pointer;">
       <img :src="getImageUrl(movie.poster_path)"
            class="image image-fluid w-100"
            :alt="movie.title"
@@ -10,7 +10,7 @@
       <h2 class="text-danger fw-bold">{{ movie.title }}</h2>
       <RatingMicro :movie="movie" class="mb-2"/>
       <p>{{ movie.overview }}</p>
-      <ReviewsMicro :reviews="movie.reviews" class="mb-2 mt-2"/>
+      <ReviewsMicro v-if="movie.reviews" :reviews="movie.reviews" class="mb-2 mt-2"/>
     </div>
   </template>
 </template>
@@ -29,10 +29,16 @@ export default {
   data() {
     return {}
   },
+  mounted() {
+    this.$store.dispatch('fetchTopTenMovies')
+  },
   methods: {
     getImageUrl(posterPath) {
       return ApiService.getImageUrl(500, posterPath)
     },
+    goToDetails(movieId) {
+      this.$router.push({name: 'movie-details', params: {id: movieId}});
+    }
   },
   computed: {
     movies() {
